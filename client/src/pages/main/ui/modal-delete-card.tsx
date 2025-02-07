@@ -9,8 +9,11 @@ import {
 } from '@/shared/ui/dialog';
 import { SquareX } from 'lucide-react';
 import type { FC } from 'react';
+import { useList } from '../lib/main-provider/main-provider';
 
-const ModalDeleteCard: FC<{ id: number; title: string }> = ({ title }) => {
+const ModalDeleteCard: FC<{ id: number; title: string }> = ({ id, title }) => {
+  const { deleteItem } = useList();
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -29,7 +32,9 @@ const ModalDeleteCard: FC<{ id: number; title: string }> = ({ title }) => {
         </div>
 
         <DialogFooter>
-          <Button variant="destructive">Удалить</Button>
+          <Button variant="destructive" onClick={() => deleteItem(id)}>
+            Удалить
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

@@ -3,7 +3,9 @@ import { ISeminar } from '../types';
 import ModalEditCard from './modal-edit-card';
 import ModalDeleteCard from './modal-delete-card';
 
-const SeminarCard: FC<ISeminar> = ({ photo, title, date, id, description }) => {
+const SeminarCard: FC<{ seminar: ISeminar }> = ({ seminar }) => {
+  const { photo, title, date, id, description } = seminar;
+
   return (
     <article className="border w-[400px] border-gray-300 h-full pb-4 rounded-lg">
       <img
@@ -20,7 +22,7 @@ const SeminarCard: FC<ISeminar> = ({ photo, title, date, id, description }) => {
           <span className="text-xs text-gray-500">{date}</span>
         </div>
         <div className="flex gap-1">
-          <ModalEditCard title={title} description={description} />
+          <ModalEditCard seminar={seminar} />
           <ModalDeleteCard id={id} title={title} />
         </div>
       </section>
