@@ -14,10 +14,13 @@ import { ISeminar } from '../types';
 import { useEditSeminar } from '../lib/use-edit-seminar/use-edit-seminar';
 import { useList } from '../lib/main-provider/main-provider';
 import ButtonLoader from '@/shared/ui/button-loader';
+import DatePicker from '@/shared/ui/date-picker';
+import { formatedStringToDate, formattedDateToString } from '../lib';
 
 const ModalEditCard: FC<{ seminar: ISeminar }> = ({ seminar }) => {
   const [openModal, setOpenModal] = useState<boolean>(false);
-  const { state, changeDescription, changeTitle } = useEditSeminar(seminar);
+  const { state, changeDescription, changeTitle, changeDate } =
+    useEditSeminar(seminar);
   const { changeItem } = useList();
 
   const saveHandler = (event: FormEvent<HTMLFormElement>) => {
@@ -25,6 +28,12 @@ const ModalEditCard: FC<{ seminar: ISeminar }> = ({ seminar }) => {
 
     changeItem(state);
     setOpenModal(false);
+  };
+
+  const onChangeDate = (newDate?: Date) => {
+    if (newDate) {
+      changeDate(formattedDateToString(newDate));
+    }
   };
 
   return (
@@ -55,6 +64,10 @@ const ModalEditCard: FC<{ seminar: ISeminar }> = ({ seminar }) => {
             id="username"
             value={state.description}
             onChange={event => changeDescription(event.target.value)}
+          />
+          <DatePicker
+            date={formatedStringToDate(state.date)}
+            onChange={onChangeDate}
           />
         </form>
 

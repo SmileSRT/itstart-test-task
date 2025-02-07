@@ -27,7 +27,6 @@ export const useList = () => useContext(ListContext);
 const MainProvider: FC<PropsWithChildren> = ({ children }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isDeleteLoading, setIsDeleteLoading] = useState<boolean>(false);
-
   const [list, dispatcher] = useReducer(reducer, []);
 
   const deleteItem = async (id: number) => {

@@ -13,5 +13,9 @@ export const useEditSeminar = (initialState: ISeminar) => {
     dispatcher({ type: actions.CHANGE_DESCRIPTION, payload: value });
   };
 
-  return { state, changeTitle, changeDescription };
+  const changeDate = (newDate: string) => {
+    dispatcher({ type: actions.CHANGE_DATE, payload: newDate });
+  };
+
+  return { state, changeTitle, changeDescription, changeDate };
 };
