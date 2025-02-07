@@ -1,6 +1,7 @@
 import { useEffect, type FC } from 'react';
 import SeminarCard from './seminar-card';
 import { useList } from '../lib/main-provider/main-provider';
+import PageLoader from '@/shared/ui/loader';
 
 const SeminarsList: FC = () => {
   const { list, fetchList, isLoading } = useList();
@@ -10,7 +11,7 @@ const SeminarsList: FC = () => {
   }, [fetchList]);
 
   if (isLoading) {
-    return <>Загрузка</>;
+    return <PageLoader />;
   }
 
   return (

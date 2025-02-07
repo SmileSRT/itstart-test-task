@@ -10,9 +10,10 @@ import {
 import { SquareX } from 'lucide-react';
 import type { FC } from 'react';
 import { useList } from '../lib/main-provider/main-provider';
+import ButtonLoader from '@/shared/ui/button-loader';
 
 const ModalDeleteCard: FC<{ id: number; title: string }> = ({ id, title }) => {
-  const { deleteItem } = useList();
+  const { deleteItem, isDeleteLoading } = useList();
 
   return (
     <Dialog>
@@ -32,9 +33,13 @@ const ModalDeleteCard: FC<{ id: number; title: string }> = ({ id, title }) => {
         </div>
 
         <DialogFooter>
-          <Button variant="destructive" onClick={() => deleteItem(id)}>
+          <ButtonLoader
+            variant="destructive"
+            onClick={() => deleteItem(id)}
+            isLoading={isDeleteLoading}
+          >
             Удалить
-          </Button>
+          </ButtonLoader>
         </DialogFooter>
       </DialogContent>
     </Dialog>

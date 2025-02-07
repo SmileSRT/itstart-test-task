@@ -13,6 +13,7 @@ import { FormEvent, useState, type FC } from 'react';
 import { ISeminar } from '../types';
 import { useEditSeminar } from '../lib/use-edit-seminar/use-edit-seminar';
 import { useList } from '../lib/main-provider/main-provider';
+import ButtonLoader from '@/shared/ui/button-loader';
 
 const ModalEditCard: FC<{ seminar: ISeminar }> = ({ seminar }) => {
   const [openModal, setOpenModal] = useState<boolean>(false);
@@ -58,7 +59,7 @@ const ModalEditCard: FC<{ seminar: ISeminar }> = ({ seminar }) => {
         </form>
 
         <DialogFooter>
-          <Button form="edit-form">Сохранить</Button>
+          <ButtonLoader form="edit-form">Сохранить</ButtonLoader>
         </DialogFooter>
       </DialogContent>
     </Dialog>

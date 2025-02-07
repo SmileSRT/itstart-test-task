@@ -14,6 +14,7 @@ import { deleteSeminar, fetchSeminarsList } from '../../api/seminars';
 interface IListContext {
   list: ISeminar[];
   isLoading: boolean;
+  isDeleteLoading: boolean;
   fetchList: () => void;
   changeItem: (item: ISeminar) => void;
   deleteItem: (id: number) => void;
@@ -25,17 +26,19 @@ export const useList = () => useContext(ListContext);
 
 const MainProvider: FC<PropsWithChildren> = ({ children }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isDeleteLoading, setIsDeleteLoading] = useState<boolean>(false);
+
   const [list, dispatcher] = useReducer(reducer, []);
 
   const deleteItem = async (id: number) => {
-    setIsLoading(true);
+    setIsDeleteLoading(true);
     const response = await deleteSeminar(id);
 
     if (response) {
       dispatcher({ type: actions.DELETE_SEMINAR, payload: id });
     }
 
-    setIsLoading(false);
+    setIsDeleteLoading(false);
   };
 
   const changeItem = (item: ISeminar) => {
@@ -55,7 +58,14 @@ const MainProvider: FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <ListContext.Provider
-      value={{ list, isLoading, deleteItem, changeItem, fetchList }}
+      value={{
+        list,
+        isLoading,
+        isDeleteLoading,
+        deleteItem,
+        changeItem,
+        fetchList,
+      }}
     >
       {children}
     </ListContext.Provider>
