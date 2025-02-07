@@ -9,7 +9,7 @@ import {
 } from 'react';
 import { ISeminar } from '../../types';
 import { actions, reducer } from './reducer';
-import { fetchSeminarsList } from '../../api/seminars';
+import { deleteSeminar, fetchSeminarsList } from '../../api/seminars';
 
 interface IListContext {
   list: ISeminar[];
@@ -27,12 +27,19 @@ const MainProvider: FC<PropsWithChildren> = ({ children }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [list, dispatcher] = useReducer(reducer, []);
 
-  const deleteItem = (id: number) => {
-    dispatcher({ type: actions.DELETE_SEMINAR, payload: id });
+  const deleteItem = async (id: number) => {
+    setIsLoading(true);
+    const response = await deleteSeminar(id);
+
+    if (response) {
+      dispatcher({ type: actions.DELETE_SEMINAR, payload: id });
+    }
+
+    setIsLoading(false);
   };
 
-  const changeItem = (seminar: ISeminar) => {
-    dispatcher({ type: actions.CHANGE_SEMINAR, payload: seminar });
+  const changeItem = (item: ISeminar) => {
+    dispatcher({ type: actions.CHANGE_SEMINAR, payload: item });
   };
 
   const fetchList = useCallback(async () => {
